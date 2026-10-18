@@ -22,3 +22,13 @@ def mostrar_cardapio():
     for codigo, (nome, preco) in cardapio.items():
         # :<20 formata o nome para ocupar 20 espaços, alinhando os preços à direita
         print(f"{codigo} - {nome:<20} R$ {preco:.2f}")
+
+def atualizar_arquivo_txt(cliente, itens_pedidos):
+    """
+    Função responsável por criar ou atualizar o arquivo .txt do cliente.
+    Ela é chamada toda vez que um novo item é adicionado ao pedido.
+    """
+    # Define o nome do arquivo usando o nome do cliente. Ex: "Alfredo.txt"
+    nome_arquivo = f"{cliente}.txt"
+    total = 0
+    
