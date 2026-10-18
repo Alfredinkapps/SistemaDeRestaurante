@@ -1,0 +1,90 @@
+NOME = "BAITOLA"
+
+cardapio = {
+    1: ("Feijoada", 42.00),
+    2: ("Picanha na chapa", 68.50),
+    3: ("Frango grelhado", 35.00),
+    4: ("Macarrão ao molho", 29.90),
+    5: ("Refrigerante", 7.00),
+    6: ("Suco natural", 9.50),
+    7: ("Pudim", 12.00),
+}
+
+
+def mostrar_cardapio():
+    print(f"\n===== CARDÁPIO {NOME} =====")
+    for codigo, (nome, preco) in cardapio.items():
+        print(f"{codigo} - {nome:<20} R$ {preco:.2f}")
+
+
+def fazer_pedido():
+    pedido = []  # lista de (nome, quantidade, preço)
+    mostrar_cardapio()
+    print("\nDigite o código do item (0 para finalizar o pedido)")
+
+    while True:
+        try:
+            codigo = int(input("Código: "))
+        except ValueError:
+            print("Digite um número.")
+            continue
+
+        if codigo == 0:
+            break
+        if codigo not in cardapio:
+            print("Item não encontrado.")
+            continue
+
+        try:
+            qtd = int(input("Quantidade: "))
+        except ValueError:
+            print("Digite um número.")
+            continue
+
+        if qtd <= 0:
+            print("Quantidade inválida.")
+            continue
+
+        nome, preco = cardapio[codigo]
+        pedido.append((nome, qtd, preco))
+        print(f"{qtd}x {nome} adicionado!")
+
+    return pedido
+
+
+def mostrar_conta(pedido):
+    if not pedido:
+        print("Nenhum item no pedido.")
+        return
+
+    print(f"\n===== CONTA - {NOME} =====")
+    total = 0
+    for nome, qtd, preco in pedido:
+        subtotal = qtd * preco
+        total += subtotal
+        print(f"{qtd}x {nome:<20} R$ {subtotal:.2f}")
+    print(f"TOTAL: R$ {total:.2f}")
+    print("Obrigado pela preferência!")
+
+
+def main():
+    print(f"Bem-vindo ao {NOME}!")
+    while True:
+        print("\n1 - Fazer pedido")
+        print("2 - Ver cardápio")
+        print("0 - Sair")
+        opcao = input("Escolha: ")
+
+        if opcao == "1":
+            pedido = fazer_pedido()
+            mostrar_conta(pedido)
+        elif opcao == "2":
+            mostrar_cardapio()
+        elif opcao == "0":
+            print(f"Até logo! {NOME} agradece.")
+            break
+        else:
+            print("Opção inválida.")
+
+
+main()
