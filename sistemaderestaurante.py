@@ -74,3 +74,56 @@ def gerenciar_itens_cliente(cliente, itens_pedidos):
         if codigo not in cardapio:
             print("Item não encontrado.")
             continue
+
+        try:
+             qtd = int(input("Quantidade: "))
+        except ValueError:
+            print("Digite um número válido.")
+            continue
+
+        if qtd <= 0:
+             print("Quantidade inválida.")
+        continue
+                # Se o cliente já pediu esse item antes, apenas somamos a quantidade nova
+    if codigo in itens_pedidos:
+                        itens_pedidos[codigo] += qtd
+    else:
+                    # Se é a primeira vez pedindo esse item, criamos o registro no dicionário
+                        itens_pedidos[codigo] = qtd
+                    
+    nome = cardapio[codigo][0]
+    print(f"{qtd}x {nome} adicionado para {cliente}!")
+                
+                # CHAVE DO SISTEMA: Sempre que um item é adicionado, chamamos a função 
+                # que reescreve o .txt, garantindo que o arquivo no computador esteja sempre atualizado.
+    atualizar_arquivo_txt(cliente, itens_pedidos)
+def ver_pedido_cliente(cliente):
+    """Lê o arquivo .txt salvo no computador e exibe na tela."""
+    nome_arquivo = f"{cliente}.txt"
+    # os.path.exists checa se o arquivo realmente existe na pasta antes de tentar abrir
+    if os.path.exists(nome_arquivo):
+        # Modo "r" (read) é apenas para leitura. Não altera o arquivo.
+        with open(nome_arquivo, "r", encoding="utf-8") as arquivo:
+            print("\n" + arquivo.read())
+    else:
+        print("\nArquivo do cliente não encontrado.")
+def exibir_clientes_ativos(pedidos_ativos):
+    """Função auxiliar para listar quem está comendo no momento."""
+    if not pedidos_ativos: # Se o dicionário estiver vazio
+        print("\nNenhum pedido em andamento no momento.")
+        return False    
+    print("\n--- CLIENTES COM PEDIDOS ABERTOS ---")
+    for cliente in pedidos_ativos.keys():
+        print(f"- {cliente}")
+    return True
+def main():
+    """
+    Função principal que controla o fluxo do programa.
+    Aqui fica o dicionário mestre 'pedidos_ativos' que gerencia todas as mesas/clientes.
+    """
+    # Dicionário que vai guardar dicionários menores.
+    # Exemplo de como a memória fica: 
+    # {"Alfredo": {1: 2, 5: 1}, "Maria": {2: 1, 6: 2}}
+pedidos_ativos = {}
+
+print(f"Bem-vindo ao sistema do {NOME}!")
