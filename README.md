@@ -47,7 +47,7 @@ Passo a Passo
 Clone o repositório ou baixe o arquivo .py:
 
 Bash
-git clone https://github.com/seu-usuario/seu-repositorio.git
+git clone https://github.com/Alfredinkapps/SistemaDeRestaurante.git
 Acesse a pasta do projeto no terminal:
 
 Bash
